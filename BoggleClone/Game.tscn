@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://RuneGrid.gd" type="Script" id=1]
+[ext_resource path="res://Rune.tscn" type="PackedScene" id=2]
+[ext_resource path="res://antiquity.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Game.gd" type="Script" id=4]
+
+[sub_resource type="Theme" id=1]
+default_font = ExtResource( 3 )
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0.540541 ), 0.0, 0.0, 0, 0, Vector2( 0.515351, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.54955 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="DynamicFontData" id=3]
+font_path = "res://antiquity-print.ttf"
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+font_data = SubResource( 3 )
+
+[sub_resource type="Theme" id=5]
+default_font = SubResource( 4 )
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="."]
+visible = false
+margin_left = 192.0
+margin_top = 32.0
+margin_right = 384.0
+margin_bottom = 76.0
+theme = SubResource( 1 )
+text = "Boggle Clone"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LayoutGuide" type="Node" parent="."]
+
+[node name="Runes" type="ReferenceRect" parent="LayoutGuide"]
+margin_left = 16.0
+margin_top = 464.0
+margin_right = 560.0
+margin_bottom = 1008.0
+mouse_filter = 2
+border_color = Color( 0.172549, 0.0862745, 0.8, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Enemy" type="ReferenceRect" parent="LayoutGuide"]
+margin_left = 192.0
+margin_top = 119.0
+margin_right = 384.0
+margin_bottom = 311.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RuneGrid" type="Node2D" parent="."]
+script = ExtResource( 1 )
+
+[node name="RuneStart" parent="RuneGrid" instance=ExtResource( 2 )]
+position = Vector2( 16, 600 )
+
+[node name="CastingLine" type="Line2D" parent="."]
+width_curve = SubResource( 2 )
+default_color = Color( 0.4, 0.14902, 0.454902, 1 )
+
+[node name="SpellLabel" type="Label" parent="."]
+margin_top = 358.0
+margin_right = 575.0
+margin_bottom = 451.0
+theme = SubResource( 5 )
+text = "ABCDEFGHI"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
