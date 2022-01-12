@@ -18,29 +18,10 @@ func _ready():
 	
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if castingState == CASTING_STARTED:
 		castingLine.set_point_position(spellBeingCast.size(), get_global_mouse_position())
-
-func _on_casting_started(rune):
-	if castingState == NOT_CASTING:
-		castingState = CASTING_STARTED
-		castingLine.add_point(rune.position + rune.centre)
-		spellBeingCast.append(rune)
-		rune.beingCast()
-		emit_signal("spell_updated")
-		castingLine.add_point(get_global_mouse_position())
-		get_tree().set_input_as_handled()
-	elif castingState == CASTING_STARTED:
-		if not rune.hasBeenCast:
-			castingLine.set_point_position(spellBeingCast.size(), rune.position + rune.centre)
-			spellBeingCast.append(rune)
-			rune.beingCast()
-			emit_signal("spell_updated")
-			castingLine.add_point(get_global_mouse_position())
-			get_tree().set_input_as_handled()
 
 func generate_grid():
 	# Roll each dice to get a single letter
@@ -77,19 +58,39 @@ func generate_grid():
 		rune.position = runeStartPos + Vector2(runeSize * col, runeSize * row )
 		add_child(rune, true)
 		rune.connect("casting_started", self, "_on_casting_started")
+		rune.connect("rune_entered", self, "_on_rune_entered")
 
+func add_rune_to_spell(rune):
+	spellBeingCast.append(rune)
+	rune.beingCast()
+	emit_signal("spell_updated")
+	castingLine.add_point(get_global_mouse_position())
+			
+func _on_casting_started(rune):
+	if castingState == NOT_CASTING:
+		castingState = CASTING_STARTED
+		castingLine.add_point(rune.position + rune.centre)
+		add_rune_to_spell(rune)
+		print("Casting started at ", rune.letter)
+#		get_tree().set_input_as_handled()
 
-func _on_CancelClick_input_event(viewport, event, shape_idx):
+func _on_rune_entered(rune):
+	if castingState == CASTING_STARTED:
+		if not rune.hasBeenCast:
+			castingLine.set_point_position(spellBeingCast.size(), rune.position + rune.centre)
+			add_rune_to_spell(rune)
+			print("Casting continues at letter ", rune.letter)
+#			get_tree().set_input_as_handled()
+
+func _on_CancelCast_input_event(viewport, event, shape_idx):
 	if (event.is_class("InputEventMouseButton") && 
-	event.button_index == BUTTON_LEFT && 
+	event.button_index == BUTTON_RIGHT && 
 	event.pressed && 
 	castingState == CASTING_STARTED):
-		print("click cancelled")
+		print("cast cancelled")
 		castingState = NOT_CASTING
 		castingLine.clear_points()
 		for rune in spellBeingCast:
 			rune.castingStopped()
 		spellBeingCast = []
 		emit_signal("spell_updated")
-		
-

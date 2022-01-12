@@ -4,7 +4,7 @@
 [ext_resource path="res://Letter.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 68, 68 )
+extents = Vector2( 42, 51 )
 
 [node name="Rune" type="Node2D"]
 position = Vector2( 55, 528 )
@@ -29,3 +29,4 @@ position = Vector2( 68, -68 )
 shape = SubResource( 1 )
 
 [connection signal="input_event" from="HitArea" to="." method="_on_HitArea_input_event"]
+[connection signal="mouse_entered" from="HitArea" to="." method="_on_HitArea_mouse_entered"]

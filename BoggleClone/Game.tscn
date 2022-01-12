@@ -1,12 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://RuneGrid.gd" type="Script" id=1]
 [ext_resource path="res://Rune.tscn" type="PackedScene" id=2]
 [ext_resource path="res://antiquity.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Game.gd" type="Script" id=4]
-
-[sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 288, 512 )
+[ext_resource path="res://SpellLabel.gd" type="Script" id=5]
 
 [sub_resource type="Theme" id=1]
 default_font = ExtResource( 3 )
@@ -24,15 +22,11 @@ font_data = SubResource( 3 )
 [sub_resource type="Theme" id=5]
 default_font = SubResource( 4 )
 
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 288, 512 )
+
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
-
-[node name="CancelClick" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CancelClick"]
-visible = false
-position = Vector2( 288, 512 )
-shape = SubResource( 6 )
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -87,8 +81,15 @@ text = "ABCDEFGHI"
 align = 1
 valign = 1
 uppercase = true
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="input_event" from="CancelClick" to="RuneGrid" method="_on_CancelClick_input_event"]
+[node name="CancelCast" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CancelCast"]
+position = Vector2( 288, 512 )
+shape = SubResource( 6 )
+
+[connection signal="input_event" from="CancelCast" to="RuneGrid" method="_on_CancelCast_input_event"]
