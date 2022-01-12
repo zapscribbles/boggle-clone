@@ -15,6 +15,11 @@ func beingCast():
 	$Letter.color = Color.darkblue
 	$Letter.update()
 
+func castingStopped():
+	hasBeenCast = false
+	$Letter.color = Color.cornflower
+	$Letter.update()
+
 func _on_HitArea_input_event(_viewport, event, _shape_idx):
 	if event.is_class("InputEventMouseButton"):
 		if event.button_index == BUTTON_LEFT && event.pressed:
