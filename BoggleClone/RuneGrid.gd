@@ -18,11 +18,6 @@ func _ready():
 	
 	pass # Replace with function body.
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	if castingState == CASTING_STARTED:
-		castingLine.set_point_position(spellBeingCast.size(), get_global_mouse_position())
-
 func generate_grid():
 	# Roll each dice to get a single letter
 	var letters = []
@@ -64,32 +59,45 @@ func add_rune_to_spell(rune):
 	spellBeingCast.append(rune)
 	rune.beingCast()
 	emit_signal("spell_updated")
-	castingLine.add_point(get_global_mouse_position())
-			
+
+func remove_last_rune_from_spell():
+	var rune = spellBeingCast.pop_back()
+	rune.castingStopped()
+	emit_signal("spell_updated")
+
+func cast_spell():
+	pass
+
 func _on_casting_started(rune):
 	if castingState == NOT_CASTING:
 		castingState = CASTING_STARTED
 		castingLine.add_point(rune.position + rune.centre)
 		add_rune_to_spell(rune)
 		print("Casting started at ", rune.letter)
-#		get_tree().set_input_as_handled()
 
 func _on_rune_entered(rune):
 	if castingState == CASTING_STARTED:
 		if not rune.hasBeenCast:
-			castingLine.set_point_position(spellBeingCast.size(), rune.position + rune.centre)
+			castingLine.add_point(rune.position + rune.centre)
 			add_rune_to_spell(rune)
 			print("Casting continues at letter ", rune.letter)
-#			get_tree().set_input_as_handled()
+		elif rune.hasBeenCast && spellBeingCast.back() == rune:
+			castingLine.remove_point(spellBeingCast.size()-1) # Minus two here because last point is connected to pointer
+			remove_last_rune_from_spell()
+			print("Letter ",rune.letter," removed from spell")
+			if spellBeingCast.empty():
+				castingState = NOT_CASTING
 
-func _on_CancelCast_input_event(viewport, event, shape_idx):
+func _on_CastSpell_input_event(viewport, event, shape_idx):
 	if (event.is_class("InputEventMouseButton") && 
 	event.button_index == BUTTON_RIGHT && 
 	event.pressed && 
 	castingState == CASTING_STARTED):
-		print("cast cancelled")
-		castingState = NOT_CASTING
+		print("spell cast")
+		castingState = SPELL_COMPLETED
 		castingLine.clear_points()
+		cast_spell()
+		castingState = NOT_CASTING
 		for rune in spellBeingCast:
 			rune.castingStopped()
 		spellBeingCast = []

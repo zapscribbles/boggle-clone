@@ -86,10 +86,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CancelCast" type="Area2D" parent="."]
+[node name="CastSpell" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CancelCast"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CastSpell"]
 position = Vector2( 288, 512 )
 shape = SubResource( 6 )
 
-[connection signal="input_event" from="CancelCast" to="RuneGrid" method="_on_CancelCast_input_event"]
+[connection signal="input_event" from="CastSpell" to="RuneGrid" method="_on_CastSpell_input_event"]
