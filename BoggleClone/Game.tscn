@@ -1,10 +1,14 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://RuneGrid.gd" type="Script" id=1]
 [ext_resource path="res://Rune.tscn" type="PackedScene" id=2]
 [ext_resource path="res://antiquity.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Game.gd" type="Script" id=4]
 [ext_resource path="res://SpellLabel.gd" type="Script" id=5]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://SpellPowerOrb.tscn" type="PackedScene" id=7]
+[ext_resource path="res://EnemyHealthOrb.tscn" type="PackedScene" id=8]
+[ext_resource path="res://SpellPower.gd" type="Script" id=9]
 
 [sub_resource type="Theme" id=1]
 default_font = ExtResource( 3 )
@@ -54,6 +58,7 @@ __meta__ = {
 }
 
 [node name="Enemy" type="ReferenceRect" parent="LayoutGuide"]
+visible = false
 margin_left = 192.0
 margin_top = 119.0
 margin_right = 384.0
@@ -73,9 +78,9 @@ width_curve = SubResource( 2 )
 default_color = Color( 0.4, 0.14902, 0.454902, 1 )
 
 [node name="SpellLabel" type="Label" parent="."]
-margin_top = 358.0
+margin_top = 399.0
 margin_right = 575.0
-margin_bottom = 451.0
+margin_bottom = 463.0
 theme = SubResource( 5 )
 text = "ABCDEFGHI"
 align = 1
@@ -89,7 +94,50 @@ __meta__ = {
 [node name="CastSpell" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CastSpell"]
+visible = false
 position = Vector2( 288, 512 )
 shape = SubResource( 6 )
+
+[node name="Enemy" parent="." instance=ExtResource( 6 )]
+position = Vector2( 288, 171 )
+scale = Vector2( 12, 12 )
+
+[node name="EnemyHealth" type="Node2D" parent="."]
+
+[node name="EnemyHealthOrb" parent="EnemyHealth" instance=ExtResource( 8 )]
+position = Vector2( 141.5, 308.5 )
+
+[node name="EnemyHealthOrb2" parent="EnemyHealth" instance=ExtResource( 8 )]
+position = Vector2( 178.5, 308.5 )
+
+[node name="EnemyHealthOrb3" parent="EnemyHealth" instance=ExtResource( 8 )]
+position = Vector2( 215.5, 308.5 )
+
+[node name="EnemyHealthOrb4" parent="EnemyHealth" instance=ExtResource( 8 )]
+position = Vector2( 252.5, 308.5 )
+
+[node name="EnemyHealthOrb5" parent="EnemyHealth" instance=ExtResource( 8 )]
+position = Vector2( 289.5, 308.5 )
+
+[node name="EnemyHealthOrb6" parent="EnemyHealth" instance=ExtResource( 8 )]
+position = Vector2( 326.5, 308.5 )
+
+[node name="EnemyHealthOrb7" parent="EnemyHealth" instance=ExtResource( 8 )]
+position = Vector2( 363.5, 308.5 )
+
+[node name="EnemyHealthOrb8" parent="EnemyHealth" instance=ExtResource( 8 )]
+position = Vector2( 400.5, 308.5 )
+
+[node name="EnemyHealthOrb9" parent="EnemyHealth" instance=ExtResource( 8 )]
+position = Vector2( 437.5, 308.5 )
+
+[node name="SpellPower" type="Node2D" parent="."]
+script = ExtResource( 9 )
+
+[node name="SpellPowerOrb" parent="SpellPower" instance=ExtResource( 7 )]
+position = Vector2( 141, 370 )
+
+[node name="SpellPowerOrb2" parent="SpellPower" instance=ExtResource( 7 )]
+position = Vector2( 178, 370 )
 
 [connection signal="input_event" from="CastSpell" to="RuneGrid" method="_on_CastSpell_input_event"]
