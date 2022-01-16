@@ -6,10 +6,10 @@ func _ready():
 	$RuneGrid.connect("spell_updated", self, "_on_spell_updated")
 	$RuneGrid.connect("spell_updated", $SpellPower, "_on_spell_updated")
 	$RuneGrid.connect("spell_cast", self, "_on_spell_cast")
-	pass # Replace with function body.
+	$RuneGrid.connect("spell_cast", $SpellPower, "_on_spell_cast")
 
 func _on_spell_updated(spellAsRunes, spellAsString):
-	
+	print("game - spell updated")
 	spell = spellAsString
 		
 	# Update label

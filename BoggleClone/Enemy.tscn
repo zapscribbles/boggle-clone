@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Creature_16x16.png" type="Texture" id=1]
+[ext_resource path="res://Enemy.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
@@ -45,23 +46,46 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 6 ) ],
-"loop": true,
+"frames": [ SubResource( 6 ), SubResource( 6 ), SubResource( 6 ), SubResource( 6 ) ],
+"loop": false,
 "name": "hit",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
-"loop": true,
+"loop": false,
 "name": "death",
 "speed": 5.0
 } ]
 
+[sub_resource type="ParticlesMaterial" id=11]
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 132.83
+initial_velocity = 33.82
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle_random = 1.0
+color = Color( 0.803922, 0.176471, 0.176471, 1 )
+
 [node name="Enemy" type="Node2D"]
+script = ExtResource( 2 )
 
 [node name="Sprites" type="Node2D" parent="."]
 
 [node name="Creature" type="AnimatedSprite" parent="Sprites"]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 1
+frame = 3
 playing = true
+
+[node name="HitEffect" type="Particles2D" parent="."]
+emitting = false
+amount = 30
+one_shot = true
+explosiveness = 0.54
+randomness = 0.31
+process_material = SubResource( 11 )
+
+[connection signal="animation_finished" from="Sprites/Creature" to="." method="_on_animation_finished"]

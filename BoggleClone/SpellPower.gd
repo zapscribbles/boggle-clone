@@ -16,20 +16,46 @@ func _on_spell_updated(spellAsRunes, spellAsString):
 	# NB This signal is connected in the Game script
 	print("spell power is ", spellAsRunes.size())
 	
+	var numStaticOrbs = get_static_orbs()
+	
 	if spellAsRunes.size() <= 0:
 		for orb in get_children():
-			orb.queue_free()
+			if !orb.shooting:
+				orb.queue_free()
 	else:
 		# Add the first orb if there isnt one
-		if get_child_count() == 0:
+		if numStaticOrbs == 0:
 			add_orb(firstOrbPos)
 		# Add additional orbs if there aren't already enough
-		elif get_child_count() < spellAsRunes.size():
-			for i in range(1, spellAsRunes.size() - get_child_count() + 1):
+		elif numStaticOrbs < spellAsRunes.size():
+			for i in range(1, spellAsRunes.size() - numStaticOrbs + 1):
 				add_orb()
-		elif get_child_count() > spellAsRunes.size():
-			for i in range(1, get_child_count() - spellAsRunes.size() + 1):
+		# Remove them if there are too many (and they aren;t currently being shot by a previous cast
+		elif numStaticOrbs > spellAsRunes.size():
+			for i in range(1, numStaticOrbs - spellAsRunes.size() + 1):
 				remove_last_orb()
+	
+	# Enable all orbs if spell is valid - or disable if invalid
+	if get_parent().check_spell_validity():
+		for orb in get_children():
+			orb.set_enabled(true)
+	else:
+		for orb in get_children():
+			orb.set_enabled(false)
+
+func get_static_orbs():
+	# Get number of orbs that aren't currently shooting
+	var count = 0
+	for orb in get_children():
+		if !orb.shooting:
+			count += 1
+	return count
+
+func _on_spell_cast():
+	# Check if spell is valid - if it is, cast it
+	if get_parent().check_spell_validity():
+		for orb in get_children():
+			orb.shoot()
 
 func add_orb(position = null):
 	if position == null:
@@ -37,6 +63,14 @@ func add_orb(position = null):
 	var orb = load("res://SpellPowerOrb.tscn").instance()
 	orb.position = position
 	add_child(orb)
+	orb.connect("enemy_hit", self, "_on_enemy_hit")
+	orb.connect("enemy_hit", get_parent().get_node("Enemy"), "_on_enemy_hit")
+	print(get_parent().get_node("Enemy"))
 
 func remove_last_orb():
 	get_children().back().queue_free()
+
+func _on_enemy_hit(byOrb):
+	print("enemy hit!")
+	byOrb.queue_free()
+	

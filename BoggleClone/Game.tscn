@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://RuneGrid.gd" type="Script" id=1]
 [ext_resource path="res://Rune.tscn" type="PackedScene" id=2]
@@ -28,6 +28,16 @@ default_font = SubResource( 4 )
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 288, 512 )
+
+[sub_resource type="Curve2D" id=7]
+_data = {
+"points": PoolVector2Array(  )
+}
+
+[sub_resource type="Curve2D" id=8]
+_data = {
+"points": PoolVector2Array(  )
+}
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
@@ -136,8 +146,10 @@ script = ExtResource( 9 )
 
 [node name="SpellPowerOrb" parent="SpellPower" instance=ExtResource( 7 )]
 position = Vector2( 141, 370 )
+curve = SubResource( 7 )
 
 [node name="SpellPowerOrb2" parent="SpellPower" instance=ExtResource( 7 )]
 position = Vector2( 178, 370 )
+curve = SubResource( 8 )
 
 [connection signal="input_event" from="CastSpell" to="RuneGrid" method="_on_CastSpell_input_event"]
