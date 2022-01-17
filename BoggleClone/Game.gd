@@ -1,12 +1,17 @@
 extends Node2D
 
 var spell
+var enemyPos
 
 func _ready():
 	$RuneGrid.connect("spell_updated", self, "_on_spell_updated")
 	$RuneGrid.connect("spell_updated", $SpellPower, "_on_spell_updated")
 	$RuneGrid.connect("spell_cast", self, "_on_spell_cast")
 	$RuneGrid.connect("spell_cast", $SpellPower, "_on_spell_cast")
+	$Enemy.connect("update_enemy_health", $EnemyHealth, "_on_update_health") 
+	$EnemyHealth._on_update_health($Enemy.health) # Need to do this the first time the game loads as emitting the signal on first Enemy load doesn't work (signal wasn;t connected yet as Game wasn;t _ready to connect signals
+	$Enemy.connect("enemy_killed", self, "_on_enemy_killed")
+	enemyPos = $Enemy.position
 
 func _on_spell_updated(spellAsRunes, spellAsString):
 	print("game - spell updated")
@@ -30,3 +35,11 @@ func check_spell_validity():
 	# Put dictionary check here - just checking for letter length for now
 	if spell.length() >= 3:
 		return true
+
+func _on_enemy_killed():
+	$Enemy.queue_free()
+	var newEnemy = load("res://Enemy.tscn").instance()
+	newEnemy.position = enemyPos
+	newEnemy.connect("update_enemy_health", $EnemyHealth, "_on_update_health") 
+	newEnemy.connect("enemy_killed", self, "_on_enemy_killed")
+	add_child(newEnemy)

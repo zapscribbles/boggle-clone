@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://RuneGrid.gd" type="Script" id=1]
 [ext_resource path="res://Rune.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://SpellPowerOrb.tscn" type="PackedScene" id=7]
 [ext_resource path="res://EnemyHealthOrb.tscn" type="PackedScene" id=8]
 [ext_resource path="res://SpellPower.gd" type="Script" id=9]
+[ext_resource path="res://EnemyHealth.gd" type="Script" id=10]
 
 [sub_resource type="Theme" id=1]
 default_font = ExtResource( 3 )
@@ -110,9 +111,9 @@ shape = SubResource( 6 )
 
 [node name="Enemy" parent="." instance=ExtResource( 6 )]
 position = Vector2( 288, 171 )
-scale = Vector2( 12, 12 )
 
 [node name="EnemyHealth" type="Node2D" parent="."]
+script = ExtResource( 10 )
 
 [node name="EnemyHealthOrb" parent="EnemyHealth" instance=ExtResource( 8 )]
 position = Vector2( 141.5, 308.5 )

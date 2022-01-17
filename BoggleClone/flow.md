@@ -45,7 +45,7 @@ graph TD
 * Draw and Cast are the same thing - spells are cast as soon as they are drawn
 * Each word is a spell, word length determines spell power (Qu counts as two letters)
 * Constant stream of enemies while timer is going - once one is defeated, another appears
-* Overkilling an enemy (doing more damage than needed to kill it) disspates remaining spell power (strategic value in holding off on longer words until needed)
+* Overkilling an enemy (doing more damage than needed to kill it) dissipates remaining spell power (strategic value in holding off on longer words until needed)
 * Enemy helth and spell power clearly visually represented. Enemy health can display as dots when within range of maximum spell power, to help player prevent wasting spell power
 * XP calculation contributions
     - Total num words found

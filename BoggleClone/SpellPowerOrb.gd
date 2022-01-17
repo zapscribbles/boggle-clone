@@ -9,20 +9,6 @@ signal enemy_hit(byOrb)
 func _ready():
 	# Show the appropriate sprite
 	check_enabled()
-	
-	# Prep path for shooting at enemy
-	var localPos = to_local(position)
-	var enemyLocalPos = to_local(get_node("/root/Game/Enemy").position)
-	var dest = enemyLocalPos - localPos
-	curve.add_point(localPos)
-#	curve.add_point(dest, Vector2(localPos.x, dest.y))
-	var rng = RandomNumberGenerator.new()
-	rng.randomize()
-	var cpX = rng.randf_range(-60, 60)
-	rng.randomize()
-	var cpY = rng.randf_range(-60, 60)
-	curve.add_point(dest, Vector2(cpX, cpY))
-#	curve.add_point(dest)
 
 func check_enabled():
 	if enabled:
@@ -38,7 +24,7 @@ func set_enabled(setting):
 		check_enabled()
 
 func _draw():
-	if debug:
+#	if debug:
 		draw_polyline(curve.get_baked_points(), Color.aquamarine, 1, true)
 
 func _process(delta):
@@ -49,3 +35,15 @@ func _process(delta):
 
 func shoot():
 	shooting = true
+	# Prep path for shooting at enemy
+	var localPos = to_local(position)
+	var enemyLocalPos = to_local(get_node("/root/Game/").enemyPos)
+	var dest = enemyLocalPos - localPos
+	curve.add_point(localPos)
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	var cpX = rng.randf_range(-60, 60)
+	rng.randomize()
+	var cpY = rng.randf_range(-60, 60)
+	curve.add_point(dest, Vector2(cpX, cpY))
+	_draw()

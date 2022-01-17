@@ -7,17 +7,13 @@
 [node name="OrbPath" type="Path2D"]
 scale = Vector2( 5, 5 )
 script = ExtResource( 3 )
-debug = false
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
-scale = Vector2( 1, 1 )
 rotate = false
 loop = false
 
 [node name="Enabled" type="Sprite" parent="PathFollow2D"]
-scale = Vector2( 1, 1 )
 texture = ExtResource( 1 )
 
 [node name="Disabled" type="Sprite" parent="PathFollow2D"]
-scale = Vector2( 1, 1 )
 texture = ExtResource( 2 )
