@@ -109,9 +109,6 @@ visible = false
 position = Vector2( 288, 512 )
 shape = SubResource( 6 )
 
-[node name="Enemy" parent="." instance=ExtResource( 6 )]
-position = Vector2( 288, 171 )
-
 [node name="EnemyHealth" type="Node2D" parent="."]
 script = ExtResource( 10 )
 
@@ -143,6 +140,7 @@ position = Vector2( 400.5, 308.5 )
 position = Vector2( 437.5, 308.5 )
 
 [node name="SpellPower" type="Node2D" parent="."]
+z_index = 1
 script = ExtResource( 9 )
 
 [node name="SpellPowerOrb" parent="SpellPower" instance=ExtResource( 7 )]
@@ -152,5 +150,9 @@ curve = SubResource( 7 )
 [node name="SpellPowerOrb2" parent="SpellPower" instance=ExtResource( 7 )]
 position = Vector2( 178, 370 )
 curve = SubResource( 8 )
+
+[node name="Enemy" parent="." groups=["enemy"] instance=ExtResource( 6 )]
+visible = true
+position = Vector2( 288, 171 )
 
 [connection signal="input_event" from="CastSpell" to="RuneGrid" method="_on_CastSpell_input_event"]

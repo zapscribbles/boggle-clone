@@ -21,7 +21,6 @@ func _on_spell_updated(spellAsRunes, spellAsString):
 	$SpellLabel.text = spell
 
 func _on_spell_cast():
-	
 	# Check if spell is valid - if it is, cast it
 	if check_spell_validity():
 		print("spell was valid")
@@ -30,14 +29,13 @@ func _on_spell_cast():
 	else:
 		print("spell was invalid")
 
-	
 func check_spell_validity():
 	# Put dictionary check here - just checking for letter length for now
 	if spell.length() >= 3:
 		return true
 
 func _on_enemy_killed():
-	$Enemy.queue_free()
+	get_tree().call_group("enemy", "queue_free")
 	var newEnemy = load("res://Enemy.tscn").instance()
 	newEnemy.position = enemyPos
 	newEnemy.connect("update_enemy_health", $EnemyHealth, "_on_update_health") 
