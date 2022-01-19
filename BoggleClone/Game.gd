@@ -12,6 +12,7 @@ func _ready():
 	$EnemyHealth._on_update_health($Enemy.health) # Need to do this the first time the game loads as emitting the signal on first Enemy load doesn't work (signal wasn;t connected yet as Game wasn;t _ready to connect signals
 	$Enemy.connect("enemy_killed", self, "_on_enemy_killed")
 	enemyPos = $Enemy.position
+	$Coin.queue_free() # Only dispaying coin in the editor
 
 func _on_spell_updated(spellAsRunes, spellAsString):
 	print("game - spell updated")
@@ -41,3 +42,7 @@ func _on_enemy_killed():
 	newEnemy.connect("update_enemy_health", $EnemyHealth, "_on_update_health") 
 	newEnemy.connect("enemy_killed", self, "_on_enemy_killed")
 	add_child(newEnemy)
+	for i in range(0, 5):
+		var coin = load("res://Coin.tscn").instance()
+		coin.position = enemyPos
+		add_child(coin)

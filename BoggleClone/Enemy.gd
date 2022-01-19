@@ -32,6 +32,7 @@ func _on_enemy_hit(byOrb):
 	health = health - 1
 	emit_signal("update_enemy_health", health)
 	if health <= 0:
+		
 		$Sprites/Creature.play("death")
 		$AnimationPlayer.play("exit")
 

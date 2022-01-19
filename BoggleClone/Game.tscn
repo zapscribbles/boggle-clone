@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://RuneGrid.gd" type="Script" id=1]
 [ext_resource path="res://Rune.tscn" type="PackedScene" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://EnemyHealthOrb.tscn" type="PackedScene" id=8]
 [ext_resource path="res://SpellPower.gd" type="Script" id=9]
 [ext_resource path="res://EnemyHealth.gd" type="Script" id=10]
+[ext_resource path="res://Chest.png" type="Texture" id=11]
+[ext_resource path="res://Coin.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Theme" id=1]
 default_font = ExtResource( 3 )
@@ -39,6 +41,59 @@ _data = {
 _data = {
 "points": PoolVector2Array(  )
 }
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 11 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 11 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 11 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 11 )
+region = Rect2( 64, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 11 )
+region = Rect2( 64, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 11 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 11 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 11 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=19]
+animations = [ {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
+"loop": true,
+"name": "open",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"loop": true,
+"name": "close",
+"speed": 5.0
+} ]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
@@ -151,8 +206,18 @@ curve = SubResource( 7 )
 position = Vector2( 178, 370 )
 curve = SubResource( 8 )
 
-[node name="Enemy" parent="." groups=["enemy"] instance=ExtResource( 6 )]
+[node name="Enemy" parent="." instance=ExtResource( 6 )]
 visible = true
+position = Vector2( 288, 171 )
+
+[node name="Chest" type="AnimatedSprite" parent="."]
+position = Vector2( 518, 171 )
+scale = Vector2( 5.5, 5.5 )
+frames = SubResource( 19 )
+animation = "open"
+frame = 4
+
+[node name="Coin" parent="." instance=ExtResource( 12 )]
 position = Vector2( 288, 171 )
 
 [connection signal="input_event" from="CastSpell" to="RuneGrid" method="_on_CastSpell_input_event"]
