@@ -1,5 +1,6 @@
 {
     "Creature": {
-        "health": 5
+        "health": 5,
+        "value": 8
     }
 }

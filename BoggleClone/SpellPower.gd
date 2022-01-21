@@ -14,7 +14,7 @@ func _ready():
 	
 func _on_spell_updated(spellAsRunes, spellAsString):
 	# NB This signal is connected in the Game script
-	print("spell power is ", spellAsRunes.size())
+#	print("spell power is ", spellAsRunes.size())
 	
 	var numStaticOrbs = get_static_orbs()
 	
@@ -65,12 +65,12 @@ func add_orb(position = null):
 	add_child(orb)
 	orb.connect("enemy_hit", self, "_on_enemy_hit")
 	orb.connect("enemy_hit", get_tree().get_nodes_in_group("enemy")[0], "_on_enemy_hit")
-	print(get_tree().get_nodes_in_group("enemy")[0])
+#	print(get_tree().get_nodes_in_group("enemy")[0])
 
 func remove_last_orb():
 	get_children().back().queue_free()
 
 func _on_enemy_hit(byOrb):
-	print("enemy hit!")
+#	print("enemy hit!")
 	byOrb.queue_free()
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://RuneGrid.gd" type="Script" id=1]
 [ext_resource path="res://Rune.tscn" type="PackedScene" id=2]
@@ -85,15 +85,21 @@ region = Rect2( 0, 0, 16, 16 )
 [sub_resource type="SpriteFrames" id=19]
 animations = [ {
 "frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
-"loop": true,
+"loop": false,
 "name": "open",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
-"loop": true,
+"loop": false,
 "name": "close",
-"speed": 5.0
+"speed": 15.0
 } ]
+
+[sub_resource type="Curve2D" id=20]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0.25, 0.25, -28.6946, 26.5165, 28.6946, -26.5165, 57.25, 0.75 )
+}
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
@@ -215,9 +221,9 @@ position = Vector2( 518, 171 )
 scale = Vector2( 5.5, 5.5 )
 frames = SubResource( 19 )
 animation = "open"
-frame = 4
 
 [node name="Coin" parent="." instance=ExtResource( 12 )]
 position = Vector2( 288, 171 )
+curve = SubResource( 20 )
 
 [connection signal="input_event" from="CastSpell" to="RuneGrid" method="_on_CastSpell_input_event"]
