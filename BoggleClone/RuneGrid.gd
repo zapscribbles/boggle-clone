@@ -44,14 +44,14 @@ func generate_grid():
 		var rune = load("res://Rune.tscn").instance()
 		print("i=",i)
 		
-		var col = i%4
-		var row = floor(i/4.0)
-		print(col, ",", row, " - ", letters[i])
+		rune.col = i%4
+		rune.row = floor(i/4.0)
+		print(rune.col, ",", rune.row, " - ", letters[i])
 		
 		# Set letter
 		rune.letter = letters[i]
 #		rune.letter = str(col) + "," + str(row)
-		rune.position = runeStartPos + Vector2(runeSize * col, runeSize * row )
+		rune.position = runeStartPos + Vector2(runeSize * rune.col, runeSize * rune.row)
 		add_child(rune, true)
 		rune.connect("casting_started", self, "_on_casting_started")
 		rune.connect("rune_entered", self, "_on_rune_entered")
@@ -84,7 +84,7 @@ func _on_casting_started(rune):
 
 func _on_rune_entered(rune):
 	if castingState == CASTING_STARTED:
-		if not rune.hasBeenCast:
+		if not rune.hasBeenCast & is_neighbour(rune):
 			print("Casting continues at letter ", rune.letter)
 			castingLine.add_point(rune.position + rune.centre)
 			add_rune_to_spell(rune)
@@ -109,3 +109,14 @@ func _on_CastSpell_input_event(viewport, event, shape_idx):
 			rune.castingStopped()
 		spellBeingCast = []
 		spell_updated()
+
+func is_neighbour(rune):
+	# Check if rune is a neighbour of the last rune to be cast
+	var origin = spellBeingCast.back()
+	# Up
+	if origin.row > 0 && rune.row == origin.row+1:
+		if rune.col == origin.col-1 || rune.col == origin.col || rune.col == origin.col+1:
+			return true
+	# Down
+#	elif origin.row > 0 && rune.row == origin.row+1:
+		

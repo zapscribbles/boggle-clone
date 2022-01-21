@@ -3,6 +3,8 @@ extends Node2D
 var letter
 var centre
 var hasBeenCast = false
+var col
+var row
 
 signal casting_started(fromRune)
 signal rune_entered(fromRune)
