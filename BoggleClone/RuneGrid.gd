@@ -7,7 +7,7 @@ var castingState = NOT_CASTING
 var castingLine
 var spellBeingCast = []
 
-signal spell_updated()
+signal spell_updated
 signal spell_cast
 
 # Called when the node enters the scene tree for the first time.
@@ -16,8 +16,6 @@ func _ready():
 	castingLine = get_parent().get_node("CastingLine")
 	
 	generate_grid()
-	
-	pass # Replace with function body.
 
 func generate_grid():
 	# Roll each dice to get a single letter
@@ -56,6 +54,7 @@ func generate_grid():
 		rune.connect("casting_started", self, "_on_casting_started")
 		rune.connect("rune_entered", self, "_on_rune_entered")
 
+
 func add_rune_to_spell(rune):
 	spellBeingCast.append(rune)
 	rune.beingCast()
@@ -72,9 +71,6 @@ func spell_updated():
 		spellString += rune.letter
 	emit_signal("spell_updated", spellBeingCast, spellString)
 
-func cast_spell():
-	pass
-
 func _on_casting_started(rune):
 	if castingState == NOT_CASTING:
 		print("Casting started at ", rune.letter)
@@ -84,7 +80,7 @@ func _on_casting_started(rune):
 
 func _on_rune_entered(rune):
 	if castingState == CASTING_STARTED:
-		if not rune.hasBeenCast & is_neighbour(rune):
+		if not rune.hasBeenCast && is_neighbour(rune):
 			print("Casting continues at letter ", rune.letter)
 			castingLine.add_point(rune.position + rune.centre)
 			add_rune_to_spell(rune)
@@ -100,7 +96,7 @@ func _on_CastSpell_input_event(viewport, event, shape_idx):
 	event.button_index == BUTTON_RIGHT && 
 	event.pressed && 
 	castingState == CASTING_STARTED):
-		print("spell cast")
+		print("spell cast attempted")
 		castingState = SPELL_COMPLETED
 		castingLine.clear_points()
 		emit_signal("spell_cast")
@@ -114,9 +110,24 @@ func is_neighbour(rune):
 	# Check if rune is a neighbour of the last rune to be cast
 	var origin = spellBeingCast.back()
 	# Up
-	if origin.row > 0 && rune.row == origin.row+1:
+	if rune.row == origin.row-1:
 		if rune.col == origin.col-1 || rune.col == origin.col || rune.col == origin.col+1:
 			return true
+		else:
+			return false
 	# Down
-#	elif origin.row > 0 && rune.row == origin.row+1:
-		
+	elif rune.row == origin.row+1:
+		if rune.col == origin.col-1 || rune.col == origin.col || rune.col == origin.col+1:
+			return true
+		else:
+			return false
+	# Left or Right
+	elif origin.row == rune.row:
+		if rune.col == origin.col-1 || rune.col == origin.col+1:
+			return true
+		else:
+			return false
+	else:
+		return false
+
+

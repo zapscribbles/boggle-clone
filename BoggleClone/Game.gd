@@ -1,17 +1,27 @@
 extends Node2D
 
-var spell
+var spellAsString
+var spellAsRunes
 var enemyPos
 #var coinScene = preload("res://Coin.tscn")
+var dictionary
+#var alphabet = {'A' : 0, 'B' : 1,'C' : 2,'D' : 3,'E' : 4,'F' : 5,'G' : 6,'H' : 7,'I' : 8,'J' : 9,'K' : 10,'L' : 11,'M' : 12,'N' : 13,'O' : 14,'P' : 15,'Q' : 16,'R' : 17,'S' : 18,'T' : 19,'U' : 20,'V' : 21,'W' : 22,'X' : 23,'Y' : 24,'Z' : 25 }
+var alreadyCast = []
 
 func _ready():
-	$RuneGrid.connect("spell_updated", self, "_on_spell_updated")
+	# Load dictionary
+	var file = File.new()
+	file.open("res://dictionary.json", file.READ)
+	var json = file.get_as_text()
+	dictionary = JSON.parse(json).result
+	file.close()
+	
+	$RuneGrid.connect("spell_updated", self, "_on_spell_updated", [], CONNECT_DEFERRED) # Using CONNECT_DEFERRED here so the spellpwoer node is updated first (orbs added) before we check orb validity here
 	$RuneGrid.connect("spell_updated", $SpellPower, "_on_spell_updated")
 	$RuneGrid.connect("spell_cast", self, "_on_spell_cast")
-	$RuneGrid.connect("spell_cast", $SpellPower, "_on_spell_cast")
 	enemyPos = $Enemy.position
 	spawn_enemy($Enemy)
-	$Coin.queue_free() # Only dispaying coin in the editor
+	$Coin.queue_free() # Only displaying coin in the editor
 
 func spawn_enemy(enemy = null):
 	if enemy == null:
@@ -23,28 +33,37 @@ func spawn_enemy(enemy = null):
 	enemy.connect("enemy_dealt_killing_blow", self, "_on_enemy_dealt_killing_blow")
 	$EnemyHealth._on_update_health(enemy.health)
 
-func _on_spell_updated(spellAsRunes, spellAsString):
+func _on_spell_updated(_spellAsRunes, _spellAsString):
 #	print("game - spell updated")
-	spell = spellAsString
+	spellAsString = _spellAsString
+	spellAsRunes = _spellAsRunes
 		
 	# Update label
-	$SpellLabel.text = spell
+	$SpellLabel.text = spellAsString
+	# Enable orbs if spell is valid
+	$SpellPower.enable_orbs_if_valid(check_spell_validity())
+	# Update definition label
+	$DefinitionLabel.text = get_spell_word_definition() if check_spell_validity() else ""
 
 func _on_spell_cast():
 	# Check if spell is valid - if it is, cast it
 	if check_spell_validity():
-#		print("spell was valid")
-		# Shoot energy at enemy
-		# Damage enemy (Check enemy health - spawn another if dead)
-		pass
+		print("spell was valid")
+		print("-\nDefinition of ",spellAsString,":\n",get_spell_word_definition(),"\n-")
+		alreadyCast.append(spellAsString)
+		$SpellPower.cast_spell()
 	else:
-#		print("spell was invalid")
-		pass
+		print("spell was invalid")
 
 func check_spell_validity():
-	# Put dictionary check here - just checking for letter length for now
-	if spell.length() >= 3:
-		return true
+	if spellAsRunes.size() >= 3 && ! alreadyCast.has(spellAsString):
+		var valid = dictionary[spellAsRunes[0].letter].has(spellAsString)
+		return valid
+	else: 
+		return false
+
+func get_spell_word_definition():
+	return dictionary[spellAsRunes[0].letter][spellAsString]
 
 func _on_enemy_dead():
 	get_tree().call_group("enemy", "queue_free")

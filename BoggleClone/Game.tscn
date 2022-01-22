@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://RuneGrid.gd" type="Script" id=1]
 [ext_resource path="res://Rune.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://EnemyHealth.gd" type="Script" id=10]
 [ext_resource path="res://Chest.png" type="Texture" id=11]
 [ext_resource path="res://Coin.tscn" type="PackedScene" id=12]
+[ext_resource path="res://antiquity-print.ttf" type="DynamicFontData" id=13]
 
 [sub_resource type="Theme" id=1]
 default_font = ExtResource( 3 )
@@ -20,6 +21,7 @@ default_font = ExtResource( 3 )
 _data = [ Vector2( 0, 0.540541 ), 0.0, 0.0, 0, 0, Vector2( 0.515351, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.54955 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="DynamicFontData" id=3]
+antialiased = false
 font_path = "res://antiquity-print.ttf"
 
 [sub_resource type="DynamicFont" id=4]
@@ -28,6 +30,12 @@ font_data = SubResource( 3 )
 
 [sub_resource type="Theme" id=5]
 default_font = SubResource( 4 )
+
+[sub_resource type="DynamicFont" id=21]
+font_data = ExtResource( 13 )
+
+[sub_resource type="Theme" id=22]
+default_font = SubResource( 21 )
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 288, 512 )
@@ -120,9 +128,9 @@ __meta__ = {
 
 [node name="Runes" type="ReferenceRect" parent="LayoutGuide"]
 margin_left = 16.0
-margin_top = 464.0
+margin_top = 439.0
 margin_right = 560.0
-margin_bottom = 1008.0
+margin_bottom = 983.0
 mouse_filter = 2
 border_color = Color( 0.172549, 0.0862745, 0.8, 1 )
 __meta__ = {
@@ -143,21 +151,35 @@ __meta__ = {
 script = ExtResource( 1 )
 
 [node name="RuneStart" parent="RuneGrid" instance=ExtResource( 2 )]
-position = Vector2( 16, 600 )
+position = Vector2( 16, 575 )
 
 [node name="CastingLine" type="Line2D" parent="."]
 width_curve = SubResource( 2 )
 default_color = Color( 0.4, 0.14902, 0.454902, 1 )
 
 [node name="SpellLabel" type="Label" parent="."]
-margin_top = 399.0
+margin_top = 374.0
 margin_right = 575.0
-margin_bottom = 463.0
+margin_bottom = 438.0
 theme = SubResource( 5 )
 text = "ABCDEFGHI"
 align = 1
 valign = 1
 uppercase = true
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DefinitionLabel" type="Label" parent="."]
+margin_left = 1.0
+margin_top = 983.0
+margin_right = 576.0
+margin_bottom = 1024.0
+theme = SubResource( 22 )
+text = "This is the word's definition"
+align = 1
+valign = 1
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -174,56 +196,56 @@ shape = SubResource( 6 )
 script = ExtResource( 10 )
 
 [node name="EnemyHealthOrb" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 141.5, 308.5 )
+position = Vector2( 141.5, 283.5 )
 
 [node name="EnemyHealthOrb2" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 178.5, 308.5 )
+position = Vector2( 178.5, 283.5 )
 
 [node name="EnemyHealthOrb3" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 215.5, 308.5 )
+position = Vector2( 215.5, 283.5 )
 
 [node name="EnemyHealthOrb4" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 252.5, 308.5 )
+position = Vector2( 252.5, 283.5 )
 
 [node name="EnemyHealthOrb5" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 289.5, 308.5 )
+position = Vector2( 289.5, 283.5 )
 
 [node name="EnemyHealthOrb6" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 326.5, 308.5 )
+position = Vector2( 326.5, 283.5 )
 
 [node name="EnemyHealthOrb7" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 363.5, 308.5 )
+position = Vector2( 363.5, 283.5 )
 
 [node name="EnemyHealthOrb8" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 400.5, 308.5 )
+position = Vector2( 400.5, 283.5 )
 
 [node name="EnemyHealthOrb9" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 437.5, 308.5 )
+position = Vector2( 437.5, 283.5 )
 
 [node name="SpellPower" type="Node2D" parent="."]
 z_index = 1
 script = ExtResource( 9 )
 
 [node name="SpellPowerOrb" parent="SpellPower" instance=ExtResource( 7 )]
-position = Vector2( 141, 370 )
+position = Vector2( 141, 345 )
 curve = SubResource( 7 )
 
 [node name="SpellPowerOrb2" parent="SpellPower" instance=ExtResource( 7 )]
-position = Vector2( 178, 370 )
+position = Vector2( 178, 345 )
 curve = SubResource( 8 )
 
 [node name="Enemy" parent="." instance=ExtResource( 6 )]
 visible = true
-position = Vector2( 288, 171 )
+position = Vector2( 288, 146 )
 
 [node name="Chest" type="AnimatedSprite" parent="."]
-position = Vector2( 518, 171 )
+position = Vector2( 518, 146 )
 scale = Vector2( 5.5, 5.5 )
 frames = SubResource( 19 )
 animation = "open"
 
 [node name="Coin" parent="." instance=ExtResource( 12 )]
-position = Vector2( 288, 171 )
+position = Vector2( 288, 146 )
 curve = SubResource( 20 )
 
 [connection signal="input_event" from="CastSpell" to="RuneGrid" method="_on_CastSpell_input_event"]

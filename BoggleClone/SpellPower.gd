@@ -34,9 +34,10 @@ func _on_spell_updated(spellAsRunes, spellAsString):
 		elif numStaticOrbs > spellAsRunes.size():
 			for i in range(1, numStaticOrbs - spellAsRunes.size() + 1):
 				remove_last_orb()
-	
+
+func enable_orbs_if_valid(valid):
 	# Enable all orbs if spell is valid - or disable if invalid
-	if get_parent().check_spell_validity():
+	if valid:
 		for orb in get_children():
 			orb.set_enabled(true)
 	else:
@@ -51,11 +52,10 @@ func get_static_orbs():
 			count += 1
 	return count
 
-func _on_spell_cast():
-	# Check if spell is valid - if it is, cast it
-	if get_parent().check_spell_validity():
-		for orb in get_children():
-			orb.shoot()
+func cast_spell():
+	# Game calls this if the spell is valid
+	for orb in get_children():
+		orb.shoot()
 
 func add_orb(position = null):
 	if position == null:
