@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=52 format=2]
 
 [ext_resource path="res://RuneGrid.gd" type="Script" id=1]
 [ext_resource path="res://Rune.tscn" type="PackedScene" id=2]
@@ -15,6 +15,13 @@
 [ext_resource path="res://antiquity-print.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://MedievalSharp-Regular.ttf" type="DynamicFontData" id=14]
 [ext_resource path="res://RoundTimer.gd" type="Script" id=15]
+[ext_resource path="res://MBG1 layer1a.png" type="Texture" id=16]
+[ext_resource path="res://MBG1 layer5.png" type="Texture" id=17]
+[ext_resource path="res://MBG1 layer2.png" type="Texture" id=18]
+[ext_resource path="res://MBG1 layer6.png" type="Texture" id=19]
+[ext_resource path="res://MBG1 layer4.png" type="Texture" id=20]
+[ext_resource path="res://MBG1 layer7.png" type="Texture" id=21]
+[ext_resource path="res://GameBackground.gd" type="Script" id=22]
 
 [sub_resource type="Theme" id=1]
 default_font = ExtResource( 3 )
@@ -55,26 +62,6 @@ _data = {
 "points": PoolVector2Array(  )
 }
 
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 11 )
-region = Rect2( 64, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 11 )
-region = Rect2( 48, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 11 )
-region = Rect2( 32, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 11 )
-region = Rect2( 16, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 0, 16, 16 )
-
 [sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 11 )
 region = Rect2( 0, 0, 16, 16 )
@@ -95,16 +82,36 @@ region = Rect2( 48, 0, 16, 16 )
 atlas = ExtResource( 11 )
 region = Rect2( 64, 0, 16, 16 )
 
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 11 )
+region = Rect2( 64, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 11 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 11 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 11 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 16, 16 )
+
 [sub_resource type="SpriteFrames" id=19]
 animations = [ {
-"frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
-"loop": false,
-"name": "close",
-"speed": 15.0
-}, {
 "frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
 "loop": false,
 "name": "open",
+"speed": 15.0
+}, {
+"frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"loop": false,
+"name": "close",
 "speed": 15.0
 } ]
 
@@ -376,5 +383,55 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RoundTimer/Labels"]
 anims/almost_timeout = SubResource( 30 )
+
+[node name="GameBackground" type="ParallaxBackground" parent="."]
+scroll_offset = Vector2( 0, 150 )
+script = ExtResource( 22 )
+camera_velocity = Vector2( -10, -200 )
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="GameBackground"]
+motion_scale = Vector2( 0.2, 0.2 )
+motion_mirroring = Vector2( 1920, 0 )
+
+[node name="Mbg1Layer1a" type="Sprite" parent="GameBackground/ParallaxLayer"]
+position = Vector2( 512, 484 )
+texture = ExtResource( 16 )
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="GameBackground"]
+motion_scale = Vector2( 0, 0.4 )
+
+[node name="Mbg1Layer2" type="Sprite" parent="GameBackground/ParallaxLayer2"]
+position = Vector2( 512, 484 )
+texture = ExtResource( 18 )
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="GameBackground"]
+motion_scale = Vector2( 0, 0.6 )
+
+[node name="Mbg1Layer4" type="Sprite" parent="GameBackground/ParallaxLayer3"]
+position = Vector2( 512, 484 )
+texture = ExtResource( 20 )
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="GameBackground"]
+motion_scale = Vector2( 0, 0.8 )
+
+[node name="Mbg1Layer5" type="Sprite" parent="GameBackground/ParallaxLayer4"]
+position = Vector2( 512, 484 )
+texture = ExtResource( 17 )
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="GameBackground"]
+motion_scale = Vector2( 0, 1 )
+
+[node name="Mbg1Layer6" type="Sprite" parent="GameBackground/ParallaxLayer5"]
+position = Vector2( 512, 484 )
+texture = ExtResource( 19 )
+
+[node name="ParallaxLayer6" type="ParallaxLayer" parent="GameBackground"]
+motion_mirroring = Vector2( 1920, 0 )
+
+[node name="Mbg1Layer7" type="Sprite" parent="GameBackground/ParallaxLayer6"]
+position = Vector2( 512, 484 )
+texture = ExtResource( 21 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [connection signal="input_event" from="CastSpell" to="RuneGrid" method="_on_CastSpell_input_event"]

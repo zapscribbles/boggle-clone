@@ -6,7 +6,7 @@ var color = Color.cornflower
 
 func _draw():
 	var font = load("res://antiquity.tres")
-	font.size = 80
+	font.size = 5*13
 	var cellSize = get_parent().get_node("ReferenceRect").rect_size
 	var runeSize = Vector2(font.size, font.size*1.225)
 	
