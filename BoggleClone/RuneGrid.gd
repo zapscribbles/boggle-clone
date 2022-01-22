@@ -95,7 +95,7 @@ func _on_CastSpell_input_event(viewport, event, shape_idx):
 	if (event.is_class("InputEventMouseButton") && 
 	event.button_index == BUTTON_RIGHT && 
 	event.pressed && 
-	castingState == CASTING_STARTED):
+	castingState == CASTING_STARTED) || (event.is_class("InputEventScreenTouch") && !event.pressed):
 		print("spell cast attempted")
 		castingState = SPELL_COMPLETED
 		castingLine.clear_points()

@@ -183,6 +183,7 @@ __meta__ = {
 }
 
 [node name="Enemy" type="ReferenceRect" parent="LayoutGuide"]
+visible = false
 margin_left = 192.0
 margin_top = 51.0
 margin_right = 384.0
