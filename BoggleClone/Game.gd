@@ -8,6 +8,8 @@ var dictionary
 #var alphabet = {'A' : 0, 'B' : 1,'C' : 2,'D' : 3,'E' : 4,'F' : 5,'G' : 6,'H' : 7,'I' : 8,'J' : 9,'K' : 10,'L' : 11,'M' : 12,'N' : 13,'O' : 14,'P' : 15,'Q' : 16,'R' : 17,'S' : 18,'T' : 19,'U' : 20,'V' : 21,'W' : 22,'X' : 23,'Y' : 24,'Z' : 25 }
 var alreadyCast = []
 
+var coins = 0
+
 func _ready():
 	# Load dictionary
 	var file = File.new()
@@ -22,6 +24,8 @@ func _ready():
 	enemyPos = $Enemy.position
 	spawn_enemy($Enemy)
 	$Coin.queue_free() # Only displaying coin in the editor
+	
+	$Chest/CoinsLabel.text = str(coins)
 
 func spawn_enemy(enemy = null):
 	if enemy == null:
@@ -84,7 +88,12 @@ func _on_coin_generation_timeout(last):
 	coin.position = enemyPos
 	coin.last = last
 	coin.connect("last_coin_stored", self, "_on_last_coin_stored")
+	coin.connect("coin_stored", self, "_on_coin_stored")
 	add_child(coin)
+
+func _on_coin_stored():
+	coins = coins + 1
+	$Chest/CoinsLabel.text = str(coins)
 
 func _on_last_coin_stored():
 	$Chest.play("close")

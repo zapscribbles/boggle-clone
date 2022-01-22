@@ -20,8 +20,9 @@ window/size/width=576
 window/size/height=1024
 window/size/resizable=false
 window/size/always_on_top=true
-window/size/test_width=432
-window/size/test_height=768
+window/size/test_width=1152
+window/size/test_height=2048
+window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
 window/stretch/aspect="keep_width"
 
@@ -32,4 +33,5 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
+2d/options/ninepatch_mode=0
 environment/default_environment="res://default_env.tres"

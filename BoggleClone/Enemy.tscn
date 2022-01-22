@@ -122,7 +122,6 @@ tracks/1/keys = {
 }
 
 [node name="Enemy" type="Node2D" groups=["enemy"]]
-visible = false
 scale = Vector2( 1e-05, 1e-05 )
 script = ExtResource( 2 )
 
@@ -132,6 +131,7 @@ position = Vector2( -50, 0 )
 [node name="Creature" type="AnimatedSprite" parent="Sprites"]
 frames = SubResource( 1 )
 animation = "idle"
+frame = 3
 playing = true
 
 [node name="HitEffect" type="Particles2D" parent="."]

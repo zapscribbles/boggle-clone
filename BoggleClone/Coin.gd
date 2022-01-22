@@ -3,6 +3,7 @@ extends Path2D
 var last
 
 signal last_coin_stored
+signal coin_stored
 
 func _ready():
 	# Get the initial control point as a basis for randomising
@@ -23,6 +24,7 @@ func _draw():
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "store_in_chest":
 #		print(name," coin stored")
+		emit_signal("coin_stored")
 		if last:
 			emit_signal("last_coin_stored")
 		queue_free()

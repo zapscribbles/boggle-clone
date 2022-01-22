@@ -2,7 +2,7 @@
 
 ## Brainstorm
 
-``` mermaid
+```mermaid
 graph TD
     start[Start Battle <br/> Begin a battle with a new enemy, or continue battling an enemy]
     summon[Summon Runes <br/> Letters are laid out in the grid <br/> Costs in-game currency? <br/> Or limit, 2/day?]
@@ -31,29 +31,32 @@ graph TD
     spellsleft --> |No| summon
 ```
 
-* Letters = Runes
-* Words = Spells
+-   Letters = Runes
+-   Words = Spells
 
 ### Spells
-* Spells are powered based on number of letters in their word
-* Qu rune counts as two letters
-* Runes that are uncommon (like Qu) are embued with extra power, strengthening the spell
 
+-   Spells are powered based on number of letters in their word
+-   Qu rune counts as two letters
+-   Runes that are uncommon (like Qu) are embued with extra power, strengthening the spell
 
 ## MVP
 
-* Draw and Cast are the same thing - spells are cast as soon as they are drawn
-* Each word is a spell, word length determines spell power (Qu counts as two letters)
-* Constant stream of enemies while timer is going - once one is defeated, another appears
-* Overkilling an enemy (doing more damage than needed to kill it) dissipates remaining spell power (strategic value in holding off on longer words until needed)
-* Enemy helth and spell power clearly visually represented. Enemy health can display as dots when within range of maximum spell power, to help player prevent wasting spell power
-* XP calculation contributions
-    - Total num words found
-    - Word lengths found (x per 3-letter word, y per 4-letter word)
-* $ calculation contributions
-    - Each enemy gives range of $'s based on their power
+-   Draw and Cast are the same thing - spells are cast as soon as they are drawn
+-   Each word is a spell, word length determines spell power (Qu counts as two letters)
+-   Constant stream of enemies while timer is going - once one is defeated, another appears
+-   Overkilling an enemy (doing more damage than needed to kill it) dissipates remaining spell power (strategic value in holding off on longer words until needed)
+    -   Decided this was too difficult - will now store overkill power to be used later
+    -   Perhaps initiall dissipates, but stores overkill later with an upgrade?
+    -   Initial upgrade could use all overkill power, further upgrading could use just the power needed to kill the current enemy
+-   Enemy helth and spell power clearly visually represented. Enemy health can display as dots when within range of maximum spell power, to help player prevent wasting spell power
+-   XP calculation contributions
+    -   Total num words found
+    -   Word lengths found (x per 3-letter word, y per 4-letter word)
+-   $ calculation contributions
+    -   Each enemy gives range of $'s based on their power
 
-``` mermaid
+```mermaid
 graph TD
     start[Start Battle <br/> Begin a battle with a new enemy, or continue battling an enemy]
     summon[Summon Runes <br/> Letters are laid out in the grid <br/> Costs in-game currency? <br/> Or limit, 2/day?]
@@ -74,6 +77,6 @@ graph TD
 
 ### Extensions
 
-* Horde Mode - enemies spawn regardless if previous enemy has been defeated. Higher difficulties mean higher spawn rates. Total health of all enemies adds up to a "horde power" - once horde power reaches a certain threshold, game over (like a timeout)
-* Speed Mode - Set number of enemies. once defeated, round is complete - completing round before the timer finishes earns extra points.
-* Floating grabs - special grabs floating arpund enemy to grab - extra $, special resources etc.
+-   Horde Mode - enemies spawn regardless if previous enemy has been defeated. Higher difficulties mean higher spawn rates. Total health of all enemies adds up to a "horde power" - once horde power reaches a certain threshold, game over (like a timeout)
+-   Speed Mode - Set number of enemies. once defeated, round is complete - completing round before the timer finishes earns extra points.
+-   Floating grabs - special grabs floating arpund enemy to grab - extra $, special resources etc.
