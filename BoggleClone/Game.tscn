@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://RuneGrid.gd" type="Script" id=1]
 [ext_resource path="res://Rune.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Coin.tscn" type="PackedScene" id=12]
 [ext_resource path="res://antiquity-print.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://MedievalSharp-Regular.ttf" type="DynamicFontData" id=14]
+[ext_resource path="res://RoundTimer.gd" type="Script" id=15]
 
 [sub_resource type="Theme" id=1]
 default_font = ExtResource( 3 )
@@ -119,6 +120,38 @@ default_font = SubResource( 24 )
 resource_local_to_scene = true
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 0.25, 0.25, -28.6946, 26.5165, 28.6946, -26.5165, 57.25, 0.75 )
+}
+
+[sub_resource type="DynamicFont" id=26]
+size = 39
+extra_spacing_top = -11
+font_data = ExtResource( 13 )
+
+[sub_resource type="Theme" id=27]
+default_font = SubResource( 26 )
+
+[sub_resource type="DynamicFont" id=28]
+size = 26
+font_data = ExtResource( 13 )
+
+[sub_resource type="Theme" id=29]
+default_font = SubResource( 28 )
+
+[sub_resource type="Animation" id=30]
+resource_name = "almost_timeout"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [node name="Game" type="Node2D"]
@@ -257,7 +290,7 @@ scale = Vector2( 5.5, 5.5 )
 frames = SubResource( 19 )
 animation = "open"
 
-[node name="CoinsLabel" type="Label" parent="Chest"]
+[node name="Label" type="Label" parent="Chest"]
 margin_left = -8.18182
 margin_top = 8.54546
 margin_right = 57.8182
@@ -274,5 +307,73 @@ __meta__ = {
 [node name="Coin" parent="." instance=ExtResource( 12 )]
 position = Vector2( 288, 146 )
 curve = SubResource( 20 )
+
+[node name="RoundTimer" type="Timer" parent="."]
+wait_time = 90.0
+one_shot = true
+autostart = true
+script = ExtResource( 15 )
+
+[node name="Labels" type="GridContainer" parent="RoundTimer"]
+margin_left = 20.0
+margin_top = 6.0
+margin_right = 148.0
+margin_bottom = 52.0
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Minutes" type="Label" parent="RoundTimer/Labels"]
+margin_right = 24.0
+margin_bottom = 46.0
+size_flags_horizontal = 0
+theme = SubResource( 27 )
+text = "9"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="m" type="Label" parent="RoundTimer/Labels"]
+margin_left = 28.0
+margin_top = 4.0
+margin_right = 50.0
+margin_bottom = 42.0
+theme = SubResource( 29 )
+text = "m"
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Seconds" type="Label" parent="RoundTimer/Labels"]
+margin_left = 54.0
+margin_right = 106.0
+margin_bottom = 46.0
+size_flags_horizontal = 3
+theme = SubResource( 27 )
+text = "99"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="s" type="Label" parent="RoundTimer/Labels"]
+margin_left = 110.0
+margin_top = 4.0
+margin_right = 128.0
+margin_bottom = 42.0
+theme = SubResource( 29 )
+text = "s"
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RoundTimer/Labels"]
+anims/almost_timeout = SubResource( 30 )
 
 [connection signal="input_event" from="CastSpell" to="RuneGrid" method="_on_CastSpell_input_event"]

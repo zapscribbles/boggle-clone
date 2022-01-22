@@ -25,7 +25,7 @@ func _ready():
 	spawn_enemy($Enemy)
 	$Coin.queue_free() # Only displaying coin in the editor
 	
-	$Chest/CoinsLabel.text = str(coins)
+	$Chest/Label.text = str(coins)
 
 func spawn_enemy(enemy = null):
 	if enemy == null:
@@ -93,7 +93,7 @@ func _on_coin_generation_timeout(last):
 
 func _on_coin_stored():
 	coins = coins + 1
-	$Chest/CoinsLabel.text = str(coins)
+	$Chest/Label.text = str(coins)
 
 func _on_last_coin_stored():
 	$Chest.play("close")
