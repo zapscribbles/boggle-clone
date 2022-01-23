@@ -2,12 +2,14 @@ tool
 extends Node2D
 
 var letter = "X"
-var color = Color.cornflower
+var color = Color.royalblue
+var font = preload("res://rune-font.tres")
 
 func _draw():
-	var font = load("res://antiquity.tres")
-	font.size = 5*13
 	var cellSize = get_parent().get_node("ReferenceRect").rect_size
+	$Glow.cellSize = cellSize
+	font.size = 5*13
 	var runeSize = Vector2(font.size, font.size*1.225)
-	
 	draw_string(font, Vector2((cellSize.x - runeSize.x)/2, -(cellSize.y - runeSize.y)/2), letter, color)
+	
+	$Glow.letter = letter

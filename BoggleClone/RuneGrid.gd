@@ -54,7 +54,6 @@ func generate_grid():
 		rune.connect("casting_started", self, "_on_casting_started")
 		rune.connect("rune_entered", self, "_on_rune_entered")
 
-
 func add_rune_to_spell(rune):
 	spellBeingCast.append(rune)
 	rune.beingCast()
@@ -70,6 +69,10 @@ func spell_updated():
 	for rune in spellBeingCast:
 		spellString += rune.letter
 	emit_signal("spell_updated", spellBeingCast, spellString)
+
+func highlight_runes_if_valid(valid):
+	for rune in spellBeingCast:
+		rune.set_highlight(valid)
 
 func _on_casting_started(rune):
 	if castingState == NOT_CASTING:

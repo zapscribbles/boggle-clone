@@ -1,6 +1,6 @@
 extends Path2D
 
-export var debug := true
+export var debug := false
 var enabled = false
 var shooting = false
 
@@ -24,12 +24,12 @@ func set_enabled(setting):
 		check_enabled()
 
 func _draw():
-#	if debug:
+	if debug:
 		draw_polyline(curve.get_baked_points(), Color.aquamarine, 1, true)
 
 func _process(delta):
 	if shooting:
-		$PathFollow2D.unit_offset += delta*1.5
+		$PathFollow2D.unit_offset += delta*1.8
 		if $PathFollow2D.unit_offset >= 1:
 			emit_signal("enemy_hit", self)
 
