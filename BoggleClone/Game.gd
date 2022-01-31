@@ -26,11 +26,6 @@ func _ready():
 	$Coin.queue_free() # Only displaying coin in the editor
 	print("test")
 	$Chest/Label.text = str(coins)
-	
-	for rect in $OverpowerStorage.get_children():
-		var orb = load("res://SpellPowerOrb.tscn").instance()
-		orb.position = Vector2(rect.rect_global_position.x + rect.rect_size.x/2, rect.rect_global_position.y + rect.rect_size.y/2)
-		add_child(orb)
 
 func spawn_enemy(enemy = null):
 	if enemy == null:

@@ -1,7 +1,8 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://RuneGrid.gd" type="Script" id=1]
 [ext_resource path="res://Rune.tscn" type="PackedScene" id=2]
+[ext_resource path="res://OverpowerStorage.gd" type="Script" id=3]
 [ext_resource path="res://Game.gd" type="Script" id=4]
 [ext_resource path="res://SpellLabel.gd" type="Script" id=5]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=6]
@@ -58,26 +59,6 @@ _data = {
 "points": PoolVector2Array(  )
 }
 
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 11 )
-region = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 11 )
-region = Rect2( 16, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 11 )
-region = Rect2( 32, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 11 )
-region = Rect2( 48, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 11 )
-region = Rect2( 64, 0, 16, 16 )
-
 [sub_resource type="AtlasTexture" id=14]
 atlas = ExtResource( 11 )
 region = Rect2( 64, 0, 16, 16 )
@@ -98,16 +79,36 @@ region = Rect2( 16, 0, 16, 16 )
 atlas = ExtResource( 11 )
 region = Rect2( 0, 0, 16, 16 )
 
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 11 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 11 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 11 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 11 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 11 )
+region = Rect2( 64, 0, 16, 16 )
+
 [sub_resource type="SpriteFrames" id=19]
 animations = [ {
-"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
-"loop": false,
-"name": "open",
-"speed": 15.0
-}, {
 "frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
 "loop": false,
 "name": "close",
+"speed": 15.0
+}, {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
+"loop": false,
+"name": "open",
 "speed": 15.0
 } ]
 
@@ -462,101 +463,9 @@ margin_top = 140.0
 margin_right = 120.0
 margin_bottom = 247.0
 columns = 3
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
-}
-
-[node name="Slot1" type="ReferenceRect" parent="OverpowerStorage"]
-margin_right = 33.0
-margin_bottom = 33.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Slot2" type="ReferenceRect" parent="OverpowerStorage"]
-margin_left = 37.0
-margin_right = 70.0
-margin_bottom = 33.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Slot3" type="ReferenceRect" parent="OverpowerStorage"]
-margin_left = 74.0
-margin_right = 107.0
-margin_bottom = 33.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Slot4" type="ReferenceRect" parent="OverpowerStorage"]
-margin_top = 37.0
-margin_right = 33.0
-margin_bottom = 70.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Slot5" type="ReferenceRect" parent="OverpowerStorage"]
-margin_left = 37.0
-margin_top = 37.0
-margin_right = 70.0
-margin_bottom = 70.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Slot6" type="ReferenceRect" parent="OverpowerStorage"]
-margin_left = 74.0
-margin_top = 37.0
-margin_right = 107.0
-margin_bottom = 70.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Slot7" type="ReferenceRect" parent="OverpowerStorage"]
-margin_top = 74.0
-margin_right = 33.0
-margin_bottom = 107.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Slot8" type="ReferenceRect" parent="OverpowerStorage"]
-margin_left = 37.0
-margin_top = 74.0
-margin_right = 70.0
-margin_bottom = 107.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Slot9" type="ReferenceRect" parent="OverpowerStorage"]
-margin_left = 74.0
-margin_top = 74.0
-margin_right = 107.0
-margin_bottom = 107.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_lock_": true
 }
 
 [connection signal="input_event" from="CastSpell" to="RuneGrid" method="_on_CastSpell_input_event"]
