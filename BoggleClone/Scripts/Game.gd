@@ -35,7 +35,7 @@ func spawn_enemy(enemy = null):
 	enemy.connect("update_enemy_health", $EnemyHealth, "_on_update_health") 
 	enemy.connect("enemy_dead", self, "_on_enemy_dead")
 	enemy.connect("enemy_dealt_killing_blow", self, "_on_enemy_dealt_killing_blow")
-	$EnemyHealth._on_update_health(enemy.health)
+	$EnemyHealth._on_update_health(enemy)
 	print("enemy spawned")
 
 func _on_spell_updated(_spellAsRunes, _spellAsString):

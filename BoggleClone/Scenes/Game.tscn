@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://Scripts/RuneGrid.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Rune.tscn" type="PackedScene" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Scripts/SpellLabel.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/SpellPowerOrb.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/EnemyHealthOrb.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scripts/SpellPower.gd" type="Script" id=9]
 [ext_resource path="res://Scripts/EnemyHealth.gd" type="Script" id=10]
 [ext_resource path="res://Assets/Images/UI/Chest.png" type="Texture" id=11]
@@ -48,6 +47,28 @@ default_font = SubResource( 23 )
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 288, 512 )
+
+[sub_resource type="StyleBoxFlat" id=31]
+bg_color = Color( 0.388235, 0.643137, 0.4, 0.278431 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+corner_detail = 1
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=32]
+bg_color = Color( 0.388235, 0.643137, 0.4, 1 )
+border_color = Color( 0.8, 0.8, 0.8, 0 )
+
+[sub_resource type="Theme" id=33]
+ProgressBar/styles/bg = SubResource( 31 )
+ProgressBar/styles/fg = SubResource( 32 )
 
 [sub_resource type="Curve2D" id=7]
 _data = {
@@ -236,32 +257,21 @@ shape = SubResource( 6 )
 position = Vector2( 2, 39 )
 script = ExtResource( 10 )
 
-[node name="EnemyHealthOrb" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 141.5, 283.5 )
-
-[node name="EnemyHealthOrb2" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 178.5, 283.5 )
-
-[node name="EnemyHealthOrb3" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 215.5, 283.5 )
-
-[node name="EnemyHealthOrb4" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 252.5, 283.5 )
-
-[node name="EnemyHealthOrb5" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 289.5, 283.5 )
-
-[node name="EnemyHealthOrb6" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 326.5, 283.5 )
-
-[node name="EnemyHealthOrb7" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 363.5, 283.5 )
-
-[node name="EnemyHealthOrb8" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 400.5, 283.5 )
-
-[node name="EnemyHealthOrb9" parent="EnemyHealth" instance=ExtResource( 8 )]
-position = Vector2( 437.5, 283.5 )
+[node name="HealthBar" type="ProgressBar" parent="EnemyHealth"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 169.0
+margin_top = 263.0
+margin_right = 403.0
+margin_bottom = 277.0
+size_flags_horizontal = 0
+theme = SubResource( 33 )
+step = 1.0
+value = 50.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="SpellPower" type="Node2D" parent="."]
 position = Vector2( 0, 32 )
@@ -277,7 +287,7 @@ position = Vector2( 178, 345 )
 curve = SubResource( 8 )
 
 [node name="Enemy" parent="." instance=ExtResource( 6 )]
-position = Vector2( 288, 203 )
+position = Vector2( 288, 197 )
 
 [node name="Chest" type="AnimatedSprite" parent="."]
 position = Vector2( 518, 203 )

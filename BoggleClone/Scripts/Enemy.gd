@@ -1,12 +1,13 @@
 extends Node2D
 
-signal update_enemy_health(_health)
+signal update_enemy_health(enemy)
 signal enemy_dealt_killing_blow(enemy)
 signal enemy_dead
 
 export(String, "Creature") var enemyType = "Creature"
 
-var health
+var curHealth
+var maxHealth
 var value
 var dealtKillingBlow = false
 
@@ -23,9 +24,10 @@ func _ready():
 	file.close()
 	
 	# Set parameters based on definition
-	health = enemyDefs[enemyType].health
+	curHealth = enemyDefs[enemyType].health
+	maxHealth = enemyDefs[enemyType].health
 	value = enemyDefs[enemyType].value
-	emit_signal("update_enemy_health", health)
+	emit_signal("update_enemy_health", self)
 	$AnimationPlayer.play("entrance")
 	visible = true
 
@@ -34,9 +36,9 @@ func _on_enemy_hit(byOrb):
 	#	print("im taking damage!")
 		$Sprites/Creature.play("hit")
 		$HitEffect.emitting = true
-		health = health - 1
-		emit_signal("update_enemy_health", health)
-		if health <= 0:
+		curHealth = curHealth - 1
+		emit_signal("update_enemy_health", self)
+		if curHealth <= 0:
 			dealtKillingBlow = true
 			emit_signal("enemy_dealt_killing_blow", self)
 			$Sprites/Creature.play("death")
