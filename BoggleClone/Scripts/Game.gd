@@ -2,6 +2,7 @@ extends Node2D
 
 var spellAsString
 var spellAsRunes
+var dictIndex
 var enemyPos
 #var coinScene = preload("res://Coin.tscn")
 var dictionary
@@ -42,6 +43,8 @@ func _on_spell_updated(_spellAsRunes, _spellAsString):
 #	print("game - spell updated")
 	spellAsString = _spellAsString
 	spellAsRunes = _spellAsRunes
+	if !spellAsRunes.empty():
+		dictIndex = spellAsRunes[0].letter[0]
 		
 	# Update label
 	$SpellLabel.text = spellAsString
@@ -64,13 +67,13 @@ func _on_spell_cast():
 
 func check_spell_validity():
 	if spellAsRunes.size() >= 3 && ! alreadyCast.has(spellAsString):
-		var valid = dictionary[spellAsRunes[0].letter].has(spellAsString)
+		var valid = dictionary[dictIndex].has(spellAsString)
 		return valid
 	else: 
 		return false
 
 func get_spell_word_definition():
-	return dictionary[spellAsRunes[0].letter][spellAsString]
+	return dictionary[dictIndex][spellAsString]
 
 func _on_enemy_dead():
 	get_tree().call_group("enemy", "queue_free")

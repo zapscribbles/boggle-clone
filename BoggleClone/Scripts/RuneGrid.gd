@@ -6,6 +6,7 @@ enum {NOT_CASTING, CASTING_STARTED, SPELL_COMPLETED}
 var castingState = NOT_CASTING
 var castingLine
 var spellBeingCast = []
+var spellString
 
 signal spell_updated
 signal spell_cast
@@ -68,9 +69,10 @@ func remove_last_rune_from_spell():
 	spell_updated()
 
 func spell_updated():
-	var spellString = ""
+	spellString = ""
 	for rune in spellBeingCast:
 		spellString += rune.letter
+	spellString = spellString.to_upper()
 	emit_signal("spell_updated", spellBeingCast, spellString)
 
 func highlight_runes_if_valid(valid):
@@ -102,7 +104,7 @@ func _on_CastSpell_input_event(viewport, event, shape_idx):
 	event.button_index == BUTTON_RIGHT && 
 	event.pressed && 
 	castingState == CASTING_STARTED) || (event.is_class("InputEventScreenTouch") && !event.pressed):
-		print("spell cast attempted")
+		print("spell cast attempted with word ", spellString)
 		castingState = SPELL_COMPLETED
 		castingLine.clear_points()
 		emit_signal("spell_cast")
@@ -110,6 +112,7 @@ func _on_CastSpell_input_event(viewport, event, shape_idx):
 		for rune in spellBeingCast:
 			rune.castingStopped()
 		spellBeingCast = []
+		spellString = ""
 		spell_updated()
 
 func is_neighbour(rune):
