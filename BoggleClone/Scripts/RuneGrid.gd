@@ -1,7 +1,7 @@
 extends Node2D
 
-var cellDice = ['AAEEGN' , 'ELRTTY' , 'AOOTTW' , 'ABBJOO' , 'EHRTVW' , 'CIMOTU' , 'DISTTY' , 'EIOSST' , 'DELRVY' , 'ACHOPS' , 'QQQQQQ' , 'EEINSU' , 'EEGHNW' , 'AFFKPS' , 'HLNNRZ' , 'DEILRX']
-#HIMNQU
+var cellDice = ['AAEEGN' , 'ELRTTY' , 'AOOTTW' , 'ABBJOO' , 'EHRTVW' , 'CIMOTU' , 'DISTTY' , 'EIOSST' , 'DELRVY' , 'ACHOPS' , 'HIMNQU' , 'EEINSU' , 'EEGHNW' , 'AFFKPS' , 'HLNNRZ' , 'DEILRX']
+
 enum {NOT_CASTING, CASTING_STARTED, SPELL_COMPLETED}
 var castingState = NOT_CASTING
 var castingLine

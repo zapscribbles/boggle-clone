@@ -1,8 +1,17 @@
-extends GridContainer
+extends Node2D
 
-var slotScene = preload("res://Scenes/OverpowerSlot.tscn")
+var nextSpawn = 1
 
 func _ready():
-	for i in range(0, 9):
-		var slot = slotScene.instance()
-		add_child(slot)
+	print(position)
+
+func store(orb:RigidBody2D):
+	orb.get_parent().remove_child(orb)
+	add_child(orb)
+	var spawnName = "SpawnPoint" + str(nextSpawn)
+	orb.position = get_node(spawnName).position
+	orb.sleeping = false
+	nextSpawn = 1 if nextSpawn == 3 else nextSpawn + 1
+	
+	
+

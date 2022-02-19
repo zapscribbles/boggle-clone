@@ -69,8 +69,3 @@ func add_orb(position = null):
 
 func remove_last_orb():
 	get_children().back().queue_free()
-
-func _on_enemy_hit(byOrb):
-#	print("enemy hit!")
-	byOrb.queue_free()
-	

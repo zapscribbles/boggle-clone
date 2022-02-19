@@ -3,6 +3,7 @@ extends Node2D
 signal update_enemy_health(enemy)
 signal enemy_dealt_killing_blow(enemy)
 signal enemy_dead
+signal redirect_to_overpower_storage(orb)
 
 export(String, "Creature") var enemyType = "Creature"
 
@@ -34,6 +35,7 @@ func _ready():
 func _on_enemy_hit(byOrb):
 	if !dealtKillingBlow:
 	#	print("im taking damage!")
+		byOrb.queue_free()
 		$Sprites/Creature.play("hit")
 		$HitEffect.emitting = true
 		curHealth = curHealth - 1
@@ -43,6 +45,9 @@ func _on_enemy_hit(byOrb):
 			emit_signal("enemy_dealt_killing_blow", self)
 			$Sprites/Creature.play("death")
 			$AnimationPlayer.play("exit")
+	else:
+		print("enemy has already been killed, orb should go to overpwoer")
+		emit_signal("redirect_to_overpower_storage", byOrb)
 
 func _on_animation_finished():
 	if $Sprites/Creature.animation == "hit":

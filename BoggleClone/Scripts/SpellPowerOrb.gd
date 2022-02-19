@@ -1,4 +1,4 @@
-extends Path2D
+extends RigidBody2D
 
 export var debug := false
 var enabled = false
@@ -9,14 +9,15 @@ signal enemy_hit(byOrb)
 func _ready():
 	# Show the appropriate sprite
 	check_enabled()
+	sleeping = true
 
 func check_enabled():
 	if enabled:
-		$PathFollow2D/Enabled.visible = true
-		$PathFollow2D/Disabled.visible = false
+		$Path2D/PathFollow2D/Enabled.visible = true
+		$Path2D/PathFollow2D/Disabled.visible = false
 	else:
-		$PathFollow2D/Enabled.visible = false
-		$PathFollow2D/Disabled.visible = true
+		$Path2D/PathFollow2D/Enabled.visible = false
+		$Path2D/PathFollow2D/Disabled.visible = true
 
 func set_enabled(setting):
 	if !shooting:
@@ -25,13 +26,16 @@ func set_enabled(setting):
 
 func _draw():
 	if debug:
-		draw_polyline(curve.get_baked_points(), Color.aquamarine, 1, true)
+		$Path2D.draw_polyline($Path2D.curve.get_baked_points(), Color.aquamarine, 1, true)
 
 func _process(delta):
 	if shooting:
-		$PathFollow2D.unit_offset += delta*1.8
-		if $PathFollow2D.unit_offset >= 1:
+		$Path2D/PathFollow2D.unit_offset += delta*5
+		if $Path2D/PathFollow2D.unit_offset >= 1:
 			emit_signal("enemy_hit", self)
+			shooting = false
+			$Path2D/PathFollow2D.unit_offset = 0
+			$Path2D/PathFollow2D.position = Vector2(0,0)
 
 func shoot():
 	shooting = true
@@ -39,11 +43,20 @@ func shoot():
 	var localPos = to_local(position)
 	var enemyLocalPos = to_local(get_node("/root/Game/").enemyPos)
 	var dest = enemyLocalPos - localPos
-	curve.add_point(localPos)
+	$Path2D.curve.add_point(localPos)
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	var cpX = rng.randf_range(-60, 60)
 	rng.randomize()
 	var cpY = rng.randf_range(-60, 60)
-	curve.add_point(dest, Vector2(cpX, cpY))
+	$Path2D.curve.add_point(dest, Vector2(cpX, cpY))
 	_draw()
+
+
+func _on_Timer_timeout():
+	if !sleeping:
+		var rnd = RandomNumberGenerator.new()
+		rnd.randomize()
+		var xForce = rnd.randf_range(-500, 500)
+		var yForce = rnd.randf_range(-500, 500)
+		applied_force = Vector2(xForce, yForce)

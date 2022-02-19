@@ -36,6 +36,7 @@ func spawn_enemy(enemy = null):
 	enemy.connect("update_enemy_health", $EnemyHealth, "_on_update_health") 
 	enemy.connect("enemy_dead", self, "_on_enemy_dead")
 	enemy.connect("enemy_dealt_killing_blow", self, "_on_enemy_dealt_killing_blow")
+	enemy.connect("redirect_to_overpower_storage", self, "_on_redirect_to_overpower_storage")
 	$EnemyHealth._on_update_health(enemy)
 	print("enemy spawned")
 
@@ -103,3 +104,7 @@ func _on_coin_stored():
 
 func _on_last_coin_stored():
 	$Chest.play("close")
+
+func _on_redirect_to_overpower_storage(orb):
+	print("orb redirected ",orb)
+	$OverpowerStorage.store(orb)
