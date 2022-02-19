@@ -50,16 +50,16 @@ extents = Vector2( 288, 512 )
 
 [sub_resource type="StyleBoxFlat" id=31]
 bg_color = Color( 0.388235, 0.643137, 0.4, 0.278431 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
 border_color = Color( 0, 0, 0, 1 )
 corner_detail = 1
-expand_margin_left = 2.0
-expand_margin_right = 2.0
-expand_margin_top = 2.0
-expand_margin_bottom = 2.0
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+expand_margin_top = 4.0
+expand_margin_bottom = 4.0
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id=32]
@@ -261,9 +261,9 @@ script = ExtResource( 10 )
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = 169.0
-margin_top = 263.0
+margin_top = 273.0
 margin_right = 403.0
-margin_bottom = 277.0
+margin_bottom = 287.0
 size_flags_horizontal = 0
 theme = SubResource( 33 )
 step = 1.0

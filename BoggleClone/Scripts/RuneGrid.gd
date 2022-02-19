@@ -1,7 +1,7 @@
 extends Node2D
 
-var cellDice = ['AAEEGN' , 'ELRTTY' , 'AOOTTW' , 'ABBJOO' , 'EHRTVW' , 'CIMOTU' , 'DISTTY' , 'EIOSST' , 'DELRVY' , 'ACHOPS' , 'HIMNQU' , 'EEINSU' , 'EEGHNW' , 'AFFKPS' , 'HLNNRZ' , 'DEILRX']
-
+var cellDice = ['AAEEGN' , 'ELRTTY' , 'AOOTTW' , 'ABBJOO' , 'EHRTVW' , 'CIMOTU' , 'DISTTY' , 'EIOSST' , 'DELRVY' , 'ACHOPS' , 'QQQQQQ' , 'EEINSU' , 'EEGHNW' , 'AFFKPS' , 'HLNNRZ' , 'DEILRX']
+#HIMNQU
 enum {NOT_CASTING, CASTING_STARTED, SPELL_COMPLETED}
 var castingState = NOT_CASTING
 var castingLine
@@ -24,7 +24,10 @@ func generate_grid():
 	for die in cellDice:
 		rng.randomize()
 		var position = rng.randi_range(0, 5)
-		letters.append(die[position])
+		var chosenLetter = die[position]
+		if chosenLetter == "Q":
+			chosenLetter = "Qu"
+		letters.append(chosenLetter)
 	
 	# Shuffle the order of letters
 	randomize()
