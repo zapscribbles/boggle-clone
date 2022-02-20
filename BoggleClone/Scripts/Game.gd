@@ -108,3 +108,7 @@ func _on_last_coin_stored():
 func _on_redirect_to_overpower_storage(orb):
 	print("orb redirected ",orb)
 	$OverpowerStorage.store(orb)
+
+
+func _on_OverpowerStorage_input_event(viewport, event, shape_idx):
+	pass # Replace with function body.

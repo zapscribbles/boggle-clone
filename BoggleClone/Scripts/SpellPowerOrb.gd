@@ -30,7 +30,7 @@ func _draw():
 
 func _process(delta):
 	if shooting:
-		$Path2D/PathFollow2D.unit_offset += delta*5
+		$Path2D/PathFollow2D.unit_offset += delta*4
 		if $Path2D/PathFollow2D.unit_offset >= 1:
 			emit_signal("enemy_hit", self)
 			shooting = false
