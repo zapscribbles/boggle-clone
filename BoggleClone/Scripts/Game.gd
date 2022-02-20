@@ -37,6 +37,9 @@ func spawn_enemy(enemy = null):
 	enemy.connect("enemy_dead", self, "_on_enemy_dead")
 	enemy.connect("enemy_dealt_killing_blow", self, "_on_enemy_dealt_killing_blow")
 	enemy.connect("redirect_to_overpower_storage", self, "_on_redirect_to_overpower_storage")
+	for orb in $OverpowerStorage.get_children():
+		if orb.get_groups().has("orbs"):
+			orb.connect("enemy_hit", enemy, "_on_enemy_hit")
 	$EnemyHealth._on_update_health(enemy)
 	print("enemy spawned")
 
@@ -109,6 +112,10 @@ func _on_redirect_to_overpower_storage(orb):
 	print("orb redirected ",orb)
 	$OverpowerStorage.store(orb)
 
-
 func _on_OverpowerStorage_input_event(viewport, event, shape_idx):
-	pass # Replace with function body.
+	if event is InputEventMouseButton && event.pressed:
+		for orb in $OverpowerStorage.get_children():
+			if orb.get_groups().has("orbs"):
+				print("orb ebing shot", orb)
+				orb.shoot()
+				break

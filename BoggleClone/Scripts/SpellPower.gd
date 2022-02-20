@@ -63,9 +63,7 @@ func add_orb(position = null):
 	var orb = load("res://Scenes/SpellPowerOrb.tscn").instance()
 	orb.position = position
 	add_child(orb)
-	orb.connect("enemy_hit", self, "_on_enemy_hit")
 	orb.connect("enemy_hit", get_tree().get_nodes_in_group("enemy")[0], "_on_enemy_hit")
-#	print(get_tree().get_nodes_in_group("enemy")[0])
 
 func remove_last_orb():
 	get_children().back().queue_free()

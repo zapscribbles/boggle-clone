@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-export var debug := false
+export var debug := true
 var enabled = false
 var shooting = false
 
@@ -38,23 +38,32 @@ func _process(delta):
 			$Path2D/PathFollow2D.position = Vector2(0,0)
 
 func shoot():
-	shooting = true
-	# Prep path for shooting at enemy
-	var localPos = to_local(position)
-	var enemyLocalPos = to_local(get_node("/root/Game/").enemyPos)
-	var dest = enemyLocalPos - localPos
-	$Path2D.curve.add_point(localPos)
-	var rng = RandomNumberGenerator.new()
-	rng.randomize()
-	var cpX = rng.randf_range(-60, 60)
-	rng.randomize()
-	var cpY = rng.randf_range(-60, 60)
-	$Path2D.curve.add_point(dest, Vector2(cpX, cpY))
-	_draw()
-
+	if get_parent().name == "SpellPower":
+		# Prep path for shooting at enemy
+		$Path2D.curve.clear_points()
+		var localPos = to_local(position)
+		var enemyLocalPos = to_local(get_node("/root/Game/").enemyPos)
+		var dest = enemyLocalPos - localPos
+		$Path2D.curve.add_point(localPos)
+		var rng = RandomNumberGenerator.new()
+		rng.randomize()
+		var cpX = rng.randf_range(-60, 60)
+		rng.randomize()
+		var cpY = rng.randf_range(-60, 60)
+		$Path2D.curve.add_point(dest, Vector2(cpX, cpY))
+		$Path2D.curve.add_point(dest)
+		_draw()
+		shooting = true
+	elif get_parent().name == "OverpowerStorage":
+		sleeping = true
+		$Path2D.curve.clear_points()
+		$Path2D.curve.add_point(Vector2(0,0))
+		$Path2D.curve.add_point(to_local(get_node("/root/Game/").enemyPos))
+		_draw()
+		shooting = true
 
 func _on_Timer_timeout():
-	if !sleeping:
+	if !sleeping && !shooting:
 		var rnd = RandomNumberGenerator.new()
 		rnd.randomize()
 		var xForce = rnd.randf_range(-500, 500)
